@@ -1,8 +1,9 @@
 //School.cpp
 #include"School.h"
-#include<iostream>
 #include<string>
-
+#include<iostream>
+#include<fstream>
+#include<cstdlib>
 School::School(){
 	
 	setName("", "");
@@ -38,4 +39,27 @@ void School::print(){
 	cout<<"Name: "<<first_name<<" "<<last_name<<"\n"
 	<<"Age:"<<age<<"\n"
 	<<"ID:"<<id<<endl;
+}
+void School::persist(){
+	key = 'h';
+	for(int i = 0; i < first_name.length(); i++)
+	{
+		en_first_name += first_name[i] ^ key;
+	}
+	for(int i = 0; i < last_name.length(); i++)
+	{
+		en_last_name += last_name[i] ^ key;
+	}
+	for(int i = 0; i < age.length(); i++)
+	{
+		en_age += age[i] ^ key;
+	}
+	for(int i =0; i < id.length(); i++)
+	{
+		en_id += id[i] ^ key;
+	}
+	
+	outData.open("JJSchoolRecords.txt", ios::app);
+	outData<<en_first_name<<" "<<en_last_name<<" "<<en_age<<" "<<en_id<<" ";
+	outData.close();
 }
